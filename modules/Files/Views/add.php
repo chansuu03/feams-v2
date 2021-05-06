@@ -32,6 +32,13 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+<?php elseif(!empty(session()->getFlashdata('errors')['assocFile'])):?>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <?= session()->getFlashdata('errors')['assocFile'];?>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 <?php endif;?>
 
 <?php helper('form'); ?>
@@ -55,11 +62,11 @@
     <div class="card-body">
       <!-- Announcement Title -->
       <div class="form-group">
-        <label>File title</label>
-        <input type="text" class="form-control <?php if(!empty($errors['title'])) echo 'is-invalid';?>" placeholder="Enter ..." name="title">
-        <?php if(!empty($errors['title'])): ?>
+        <label>File Name</label>
+        <input type="text" class="form-control <?php if(isset(session()->getFlashdata('errors')['title'])) echo 'is-invalid';?>" placeholder="Enter ..." name="title">
+        <?php if(isset(session()->getFlashdata('errors')['title'])):?>
         <div class="invalid-feedback">
-          <?= $errors['title']?>
+          <?= session()->getFlashdata('errors')['title']?>
         </div>
         <?php endif; ?>
       </div>
@@ -69,12 +76,15 @@
         <label for="exampleInputFile">File to be uploaded:</label>
         <div class="input-group">
           <div class="custom-file">
-            <input type="file" class="custom-file-input <?php if(!empty($errors['assocFile'])) echo 'is-invalid';?>" id="assocFile" name="assocFile">
+            <input type="file" class="custom-file-input <?php if(isset(session()->getFlashdata('errors')['assocFile'])) echo 'is-invalid';?>" id="assocFile" name="assocFile">
             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
           </div>
         </div>
-        <?php if(!empty($errors['assocFile'])): ?>
-          <small id="assocFileError" class="form-text text-danger"><?= $errors['assocFile']?></small>
+          <small id="emailHelp" class="form-text text-muted">Only document files are accepted.</small>
+        <?php if(isset(session()->getFlashdata('errors')['assocFile'])):?>
+        <div class="invalid-feedback">
+          <?= session()->getFlashdata('errors')['assocFile']?>
+        </div>
         <?php endif; ?>
       </div>
     </div>

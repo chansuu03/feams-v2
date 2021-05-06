@@ -23,8 +23,13 @@ class Files extends \CodeIgniter\Controller
 
         // dapat separate yung admin pati mga user na files
         $fileModel = new FileModel();
-        $data['files'] = $fileModel->where('uploader', '1')->findAll();
-        $data['members'] = $fileModel->where('uploader !=', '1')->findAll();
+        $data['files2'] = $fileModel->where('uploader', '1')->findAll();
+        $data['files'] = $fileModel->viewAdmin();
+        // echo '<pre>';
+        // print_r($data['files2']);
+        // die();
+        $data['members2'] = $fileModel->where('uploader !=', '1')->findAll();
+        $data['members'] = $fileModel->viewMembers();
         return view('Modules\Files\Views\index', $data);
     }
 
@@ -46,12 +51,18 @@ class Files extends \CodeIgniter\Controller
         }
         else {
             $fileCheck = $validation->setRules([
-                'title' => 'required|alpha_numeric_punct',
-                'assocFile' => 'uploaded[assocFile]',
+                'title' => [
+                    'label' => 'file name',
+                    'rules' => 'required|alpha_numeric_punct',
+                ],
+                'assocFile' => [
+                    'label' => 'File',
+                    'rules' => 'uploaded[assocFile]|ext_in[assocFile,doc,docx,pdf,xls,xlsx, pptx,ppt,epub,pub]',
+                ],
             ]);
 
             if(!$validation->run($_POST)) {
-                $session->setFlashdata('failMsg', 'There is an error at your file uploading, please try again');
+                $session->setFlashdata('errors', $validation->getErrors());
                 return redirect()->back();
             }
 
@@ -91,8 +102,13 @@ class Files extends \CodeIgniter\Controller
             $data['active'] = 'files';
     
             $fileModel = new FileModel();
-            $data['files'] = $fileModel->where('uploader', '1')->findAll();
-            $data['members'] = $fileModel->where('uploader', $session->get('user_id'))->findAll();
+            $data['files2'] = $fileModel->where('uploader', '1')->findAll();
+            $data['files'] = $fileModel->viewAdmin();
+            $data['members2'] = $fileModel->where('uploader', $session->get('user_id'))->findAll();
+            $data['members'] = $fileModel->viewMember($session->get('user_id'));
+            // echo '<pre>';
+            // print_r($data['members']);
+            // die();
             return view('Modules\Files\Views\index', $data);
         }
         else {

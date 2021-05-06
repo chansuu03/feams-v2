@@ -79,7 +79,7 @@
                     <td>
                         <?= readableBytes($file['size']);?>
                     </td>
-                    <td><?= $file['uploader'];?></td>
+                    <td><?= $file['username'];?></td>
                     <td>
                         <?php
                             $date = date_create($file['uploaded_at']);
@@ -133,7 +133,7 @@
                     <td>
                         <?= readableBytes($member['size']);?>
                     </td>
-                    <td><?= $member['uploader'];?></td>
+                    <td><?= $member['username'];?></td>
                     <td>
                         <?php
                             $date = date_create($member['uploaded_at']);

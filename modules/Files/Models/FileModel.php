@@ -22,6 +22,24 @@ class FileModel extends \CodeIgniter\Model
         return $this->findAll();
     }
 
+    public function viewAdmin() {
+        return $this->join('fea_users', 'fea_files.uploader = fea_users.user_id')
+                    ->where('uploader', '1')
+                    ->findAll();
+    }
+
+    public function viewMember($id = null) {
+        return $this->join('fea_users', 'fea_files.uploader = fea_users.user_id')
+                    ->where('uploader', $id)
+                    ->findAll();
+    }
+
+    public function viewMembers() {
+        return $this->join('fea_users', 'fea_files.uploader = fea_users.user_id')
+                    ->where('uploader !=', '1')
+                    ->findAll();
+    }
+
     public function delFile($id = null) {
         return $this->delete(['file_id' => $id]);
     }
