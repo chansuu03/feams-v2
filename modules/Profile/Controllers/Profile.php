@@ -47,6 +47,7 @@ class Profile extends \CodeIgniter\Controller
 
     public function update($username = null) {
         $session = session();
+		$validation =  \Config\Services::validation();
         
         if(!session()->has('logged_in')) {
             session()->setFlashdata('msg', 'Please login to access this page.');
@@ -58,6 +59,27 @@ class Profile extends \CodeIgniter\Controller
                 return redirect()->to(base_url() . '/login');
             }
             else {
+                $data['validate'] = $validation->setRules([
+                    'first_name' => 'required|alpha_numeric_space',
+                    'last_name' => 'required|alpha_numeric_space',
+                ], 
+                [
+                    // Errors
+                    'first_name' => [
+                        'required' => 'This is a required field',
+                        'alpha_numeric_space' => 'First name should have alphabetic and spaces only',
+                    ],
+                    'last_name' => [
+                        'required' => 'This is a required field',
+                        'alpha_numeric_space' => 'Last name should have alphabetic and spaces only',
+                    ],
+                ]);
+                
+                if(!$validation->run($_POST)) {
+                    $session->setFlashdata('errors', $validation->getErrors());
+                    return redirect()->back();
+                }
+
                 $userModel = new UserModel();
                 $data = [
                     'first_name' => $this->request->getVar('first_name'),
