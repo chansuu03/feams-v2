@@ -12,7 +12,7 @@
         <?= form_open('roles/add');?>
             <div class="form-group">
                 <label for="role_name">Role Name</label>
-                <input type="text" class="form-control" id="role_name" name="role_name">
+                <input type="text" class="form-control" id="role_name" name="role_name" required>
             </div>
       </div>
       <div class="modal-footer">

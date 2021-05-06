@@ -47,4 +47,49 @@ class Validation
 			'rules' => 'required|min_length[5]|max_length[30]|is_unique[fea_users.username]'
 		],
 	];
+
+	public $announcements = [
+		'title' => [
+			'label'  => 'title',
+			'rules'  => 'required|alpha_numeric_space',
+			'errors' => [
+				'required' => 'You must have {field} provided',
+				'alpha_numeric_space' => 'T	itle must include only alphanumeric characters or spaces.',
+			]
+		],
+
+		'description' => [
+			'label'  => 'description',
+			'rules'  => 'required|alpha_numeric_space',
+			'errors' => [
+				'required' => 'You must have {field} provided',
+				'alpha_numeric_space' => 'Announcement description must include only alphanumeric characters or spaces.',
+			]
+		],
+
+		'start_date' => [
+			'label'  => 'date start',
+			'rules'  => 'required',
+			'errors' => [
+				'required' => 'You must have {field} provided'
+			]
+		],
+
+		'end_date' => [
+			'label'  => 'date end',
+			'rules'  => 'required',
+			'errors' => [
+				'required' => 'You must have {field} provided'
+			]
+		],
+
+		// images
+		'image' => [
+			'rules' => 'uploaded[image]|is_image[image]',
+			'errors' => [
+				'uploaded' => 'Please upload image.',
+				'is_image' => 'Uploaded file is not a valid image.',
+			]
+		],
+	];
 }

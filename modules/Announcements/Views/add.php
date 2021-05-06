@@ -36,7 +36,7 @@
       <!-- Announcement Title -->
       <div class="form-group">
         <label>Announcement Title:</label>
-        <input type="text" class="form-control <?php if(!empty($errors['title'])) echo 'is-invalid';?>" placeholder="Enter ..." name="title">
+        <input type="text" class="form-control <?php if(!empty($errors['title'])) echo 'is-invalid';?>" placeholder="Enter ..." name="title" required>
         <?php if(!empty($errors['title'])): ?>
         <div class="invalid-feedback">
           <?= $errors['title']?>
@@ -46,7 +46,7 @@
       <!-- Announcement Description -->
       <div class="form-group">
         <label>Announcement Description:</label>
-        <textarea class="form-control <?php if(!empty($errors['description'])) echo 'is-invalid';?>" rows="3" placeholder="Enter ..." name="description"></textarea>
+        <textarea class="form-control <?php if(!empty($errors['description'])) echo 'is-invalid';?>" rows="3" placeholder="Enter ..." name="description" required></textarea>
         <?php if(!empty($errors['description'])): ?>
         <div class="invalid-feedback">
           <?= $errors['description']?>
@@ -55,7 +55,7 @@
       </div>
       <!-- Start and End date -->
       <div class="form-group">
-        <label>Start and end date:</label>
+        <!-- <label>Start and end date:</label>
 
         <div class="input-group">
           <div class="input-group-prepend">
@@ -69,7 +69,7 @@
             <?= $errors['start_date'] . ' and/or ' . $errors['end_date'] ?>
           </div>
           <?php endif; ?>
-        </div>
+        </div> -->
         <!-- /.input group -->
       </div>
       <!-- Image upload -->
@@ -88,8 +88,8 @@
     </div>
 
     <!-- store different input from date range -->
-    <input type="hidden" id="startDate" name="start_date">
-    <input type="hidden" id="endDate" name="end_date">
+    <!-- <input type="hidden" id="startDate" name="start_date">
+    <input type="hidden" id="endDate" name="end_date"> -->
 
     <div class="card-footer">
       <button type="submit" class="btn btn-primary float-right">Submit</button>

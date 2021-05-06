@@ -39,10 +39,17 @@ class Roles extends \CodeIgniter\Controller {
 		$positionCheck = $validation->setRules([
 			'role_name' => 'required|alpha_numeric_punct',
 			// 'max_vote' => 'required|integer',
-		]);
+        ],
+        [
+            // Errors
+            'role_name' => [
+                'required' => 'Role name is a required field',
+                'alpha_numeric_punct' => 'Role name should have alphanumeric characters and punctuations only',
+            ],
+        ]);
 
 		if(!$validation->run($_POST)) {
-			$session->setFlashdata('failMsg', 'There is an error at your role name');
+            $session->setFlashdata('failMsg', $validation->getErrors());
 			return redirect()->back();
 		}
 		else {

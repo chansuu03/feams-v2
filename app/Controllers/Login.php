@@ -28,7 +28,7 @@ class Login extends BaseController
                 $user = $userModel->where('username', $_POST['username'])->first();
                 if(!empty($user)) {
                     if($user['status'] != 'a') {
-                        $session->setFlashdata('msg', 'Account not activated, please verify email');
+                        $session->setFlashdata('failMsg', 'Account not activated, please verify email');
                         return redirect()->to('/login');
                     }
                     else {
@@ -59,19 +59,19 @@ class Login extends BaseController
                             }
                         }
                         else {
-                            $session->setFlashdata('msg', 'Invalid username or password?.');
+                            $session->setFlashdata('failMsg', 'Invalid username or password?');
                             return redirect()->back()->withInput(); 
                         }
                     }
                 }
                 else {
-                    $session->setFlashdata('msg', 'Invalid username or password.??');
+                    $session->setFlashdata('failMsg', 'Invalid username or password');
                     return redirect()->to('/login');
                 }
             }
             else {
                 $data['validation'] = $this->validator;
-                $session->setFlashdata('msg', 'Invalid username or password.');
+                $session->setFlashdata('failMsg', 'Invalid username or password');
                 return redirect()->back()->withInput(); 
             }
         }
